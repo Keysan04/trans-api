@@ -55,9 +55,11 @@ GET  {{transApi}}
 ###
 POST {{transApi}}
 Content-Type: application/json
-
+Authorization: 655899399c95a6ffa962bc29 
 {
     "type": "income",
-    "item": "shopping",
-    "amount": "12345"
+    "date": "2023-11-1",
+    "title": "shopping",
+    "amount": "300",
+    "userId": "655899399c95a6ffa962bc29"
 }

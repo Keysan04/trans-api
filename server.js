@@ -16,10 +16,10 @@ connectMongoDb();
 
 // routers
 import userRouter from "./src/router/userRoter.js";
-import transactionRouter from "./src/router/transactionRouter.js";
+import transRouter from "./src/router/transRouter.js";
 app.use("/api/v1/user", userRouter);
 
-app.use("/api/v1/trans", transactionRouter);
+app.use("/api/v1/trans", transRouter);
 
 app.get("/", (req, res) => {
   res.json({
