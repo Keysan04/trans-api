@@ -17,13 +17,13 @@ connectMongoDb();
 // routers
 import userRouter from "./src/router/userRoter.js";
 import transRouter from "./src/router/transRouter.js";
-app.use("/api/v1/user", userRouter);
 
-app.use("/api/v1/trans", transRouter);
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/transaction", transRouter);
 
 app.get("/", (req, res) => {
   res.json({
-    message: "server is live",
+    message: "served is live",
   });
 });
 

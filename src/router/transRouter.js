@@ -1,17 +1,43 @@
 import express from "express";
-import { getUserTrans } from "../module/transaction/TransModule.js";
-
-import { insertTrans } from "../module/transaction/TransModule.js";
+import {
+  deleteTrans,
+  getUserTrans,
+  insertTrans,
+} from "../models/transacton/TransModel.js";
 import { userAuth } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
-router.get("/", userAuth, async (req, res) => {
+// insert transaction
+router.post("/", userAuth, async (req, res) => {
+  try {
+    console.log(req.body);
+    // call model for query
+    const result = await insertTrans({ ...req.body, userId: req.userId });
+
+    result?._id
+      ? res.json({
+          status: "success",
+          message: "Transaction has been added successfully",
+        })
+      : res.json({
+          status: "error",
+          message: "Unable to add the transaction, please try again later",
+        });
+  } catch (error) {
+    res.json({
+      stauts: "error",
+      message: error.message,
+    });
+  }
+});
+
+// get all transaction for specific user only
+router.get("/", userAuth, async (req, res, next) => {
   try {
     const transList = await getUserTrans(req.userId);
-
     res.json({
       status: "success",
-      message: "success",
+      message: "here are the list",
       transList,
     });
   } catch (error) {
@@ -19,44 +45,24 @@ router.get("/", userAuth, async (req, res) => {
   }
 });
 
-router.post("/", userAuth, async (req, res) => {
+// delete transactions
+router.delete("/", userAuth, async (req, res, next) => {
   try {
-    // insert user
-    const result = await insertTrans(req.body);
+    const { userId, body } = req;
+    const result = await deleteTrans(userId, body);
 
-    result?._id
+    result.deletedCount
       ? res.json({
           status: "success",
-          message: "Your transaction have been created",
+          message: `${result.deletedCount} transactions has been deleted`,
         })
       : res.json({
           status: "error",
-          message: "Unable to create a transaction",
+          message: `Unable to delete the trnassactions, please try agian later`,
         });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 });
-
-// router.post("/transaction", async (req, res, next) => {
-//   try {
-//     const { _userId } = req.body;
-
-//     // check if user exist for the given email
-//     const result = await getUserById(_userId);
-
-//     if (result?._userId) {
-//       // check if the plain pass and the pass from db, the hashed one, is the same
-
-//       return res.json({
-//         status: "success",
-//         message: "transaction added  successfully",
-//         user: result,
-//       });
-//     }
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 
 export default router;

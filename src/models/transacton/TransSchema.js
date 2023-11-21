@@ -24,4 +24,4 @@ const transSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("Transaction", transSchema); //transactions
+export default mongoose.model("Transaction", transSchema);

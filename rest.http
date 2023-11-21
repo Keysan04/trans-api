@@ -5,7 +5,7 @@
 # path: api/v1/user
 
 @userApi = http://localhost:8000/api/v1/user
-@transApi = http://localhost:8000/api/v1/trans
+@transApi = http://localhost:8000/api/v1/transaction
 
 
 
@@ -23,8 +23,8 @@ POST {{userApi}}
 Content-Type: application/json
 
 {
-    "name": "kishan",
-    "email": "keys@an",
+    "name": "Prem",
+    "email": "b@a.com",
     "password": "12345"
 }
 
@@ -50,16 +50,17 @@ DELETE  {{userApi}}
 # ============ transactions apis
 ### trans get Api
 GET  {{transApi}} 
+Authorization: 6552f9f5abaa2dc477510adc
 
-
-###
-POST {{transApi}}
+### trans get Api
+Post  {{transApi}} 
 Content-Type: application/json
-Authorization: 655899399c95a6ffa962bc29 
+Authorization: 6552f9f5abaa2dc477510adc
+
 {
-    "type": "income",
-    "date": "2023-11-1",
-    "title": "shopping",
-    "amount": "300",
-    "userId": "655899399c95a6ffa962bc29"
+    "amount" :  "12345",
+"date" :  "2023-11-19",
+"title" :  "found it",
+"type" :  "income"
+ 
 }

@@ -1,5 +1,5 @@
 import express from "express";
-import { getUserByEmail, insertUser } from "../module/user/UserModule.js";
+import { getUserByEmail, insertUser } from "../models/user/UserModel.js";
 import { comparePassword, hashPassword } from "../utils/bcryptHelper.js";
 const router = express.Router();
 
@@ -14,6 +14,7 @@ router.get("/", (req, res, next) => {
   }
 });
 
+//creating user
 router.post("/", async (req, res, next) => {
   try {
     const { password } = req.body;
@@ -24,7 +25,7 @@ router.post("/", async (req, res, next) => {
 
     // insert user
     const result = await insertUser(req.body);
-    console.log(result);
+
     result?._id
       ? res.json({
           status: "success",
